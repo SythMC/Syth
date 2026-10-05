@@ -2,11 +2,17 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::{fs, path::Path};
 
-// Minecraft Classic server.properties from https://minecraft.wiki/w/Server.properties#Java_Edition_Classic
-// TODO check if https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Classic%20Protocol%20Extension has anything (99.99% sure it wont since its protocol shit)
-#[derive(Debug, Deserialize, Serialize, Clone)]
+// TODO: If anything gets added make sure the config gets updated
+#[derive(Debug, Deserialize, Serialize, Clone, Default)]
 #[serde(default)]
 pub struct Config {
+    pub server: MinecraftConfig,
+    pub cpe: CPEConfig,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(default)]
+pub struct MinecraftConfig {
     pub server_name: String,
     pub motd: String,
     pub ip: String,
@@ -19,7 +25,18 @@ pub struct Config {
     pub admin_slot: bool,
 }
 
-impl Default for Config {
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(default)]
+pub struct CPEConfig {
+    pub hack_control_flying: u8,
+    pub hack_control_noclip: u8,
+    pub hack_control_speeding: u8,
+    pub hack_control_spawn_control: u8,
+    pub hack_control_third_person_view: u8,
+    pub hack_control_jump_height: i16,
+}
+
+impl Default for MinecraftConfig {
     fn default() -> Self {
         Self {
             server_name: "Minecraft Server".to_string(),
@@ -32,6 +49,19 @@ impl Default for Config {
             max_connections: 3,
             grow_trees: false,
             admin_slot: false,
+        }
+    }
+}
+
+impl Default for CPEConfig {
+    fn default() -> Self {
+        Self {
+            hack_control_flying: 1,
+            hack_control_noclip: 1,
+            hack_control_speeding: 1,
+            hack_control_spawn_control: 1,
+            hack_control_third_person_view: 1,
+            hack_control_jump_height: 40,
         }
     }
 }

@@ -7,14 +7,14 @@ use syth_config::Config;
 
 fn main() {
     let config = Config::load();
-    let address = format!("{}:{}", config.ip, config.port);
+    let address = format!("{}:{}", config.server.ip, config.server.port);
     let listener = TcpListener::bind(address).unwrap();
 
     heartbeat::send_heartbeat(
-        &config.port,
-        &config.max_players,
-        &config.server_name,
-        &config.public,
+        &config.server.port,
+        &config.server.max_players,
+        &config.server.server_name,
+        &config.server.public,
     );
 
     for stream in listener.incoming() {

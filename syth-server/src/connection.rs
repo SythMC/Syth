@@ -19,8 +19,8 @@ pub fn handle_connection(mut stream: TcpStream, config: &Config) -> std::io::Res
     );
 
     stream.write_all(&protocol::server_identification(
-        &config.server_name,
-        &config.motd,
+        &config.server.server_name,
+        &config.server.motd,
     ));
 
     stream.write_all(&[protocol::packet_ids::LEVEL_INIT]);
