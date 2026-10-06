@@ -1,3 +1,4 @@
+use crate::cpe::server::hack_control::hack_control_packet;
 use crate::protocol::{self, PlayerIdentification};
 
 use std::io::{Read, Write};
@@ -31,6 +32,7 @@ pub fn handle_connection(mut stream: TcpStream, config: &Config) -> std::io::Res
         16,
         16,
     ));
+    stream.write_all(&hack_control_packet(config));
 
     // got to change this to stop if the player sends other packets
     // Ping packet

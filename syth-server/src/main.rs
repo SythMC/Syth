@@ -1,4 +1,5 @@
 mod connection;
+mod cpe;
 mod heartbeat;
 mod protocol;
 
